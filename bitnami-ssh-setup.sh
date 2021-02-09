@@ -28,7 +28,7 @@ sudo su -c " mv ${HOME}/moduli.safe /etc/ssh/moduli "
 
 #download sshd_config templates
 sudo su -c ' wget https://raw.githubusercontent.com/urbanswelt/bitnami/main/sshd_config.template '
-sudo su -c ' wget https://raw.githubusercontent.com/urbanswelt/bitnami/main/sshd_config_w_pw_enabled '
+sudo su -c ' wget https://raw.githubusercontent.com/urbanswelt/bitnami/main/sshd_config.PasswordAuthentication '
 
 #backup original sshd_config
 sudo su -c " mv /etc/ssh/sshd_config /etc/ssh/sshd_config.original "
