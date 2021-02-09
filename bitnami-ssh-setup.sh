@@ -1,4 +1,19 @@
 #!/bin/bash
+
+# Ansi color code variables
+red="\e[0;91m"
+blue="\e[0;94m"
+expand_bg="\e[K"
+blue_bg="\e[0;104m${expand_bg}"
+red_bg="\e[0;101m${expand_bg}"
+green_bg="\e[0;102m${expand_bg}"
+green="\e[0;92m"
+white="\e[0;97m"
+bold="\e[1m"
+uline="\e[4m"
+reset="\e[0m"
+
+#https://techstop.github.io/bash-script-colors/#:~:text=Colors%20in%20bash%20scripts%20can%20be%20used%20to,Background%20colors%20can%20be%20used%20for%20section%20separation.
 #https://www.ssh-audit.com/hardening_guides.html
 
 sudo su
@@ -10,6 +25,26 @@ ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N ""
 #Remove small Diffie-Hellman moduli
 awk '$5 >= 3071' /etc/ssh/moduli > /etc/ssh/moduli.safe
 mv /etc/ssh/moduli.safe /etc/ssh/moduli
-wget https://raw.githubusercontent.com/urbanswelt/bitnami/main/sshd_config.template
 
+#download sshd_config templates
+wget https://raw.githubusercontent.com/urbanswelt/bitnami/main/sshd_config.template
+wget https://raw.githubusercontent.com/urbanswelt/bitnami/main/sshd_config_w_pw_enabled
+
+#backup original sshd_config
+mv /etc/ssh/sshd_config /etc/ssh/sshd_config.original
+mv sshd_config_w_pw_enabled /etc/ssh/sshd_config
+
+#enable ssh
+systemctl enable ssh
+systemctl start ssh
+
+echo -e
+echo -e
+echo -e "${red}##############################################################"
+echo "  temporarily ssh with password login is allowed,"
+echo "  please add your key to ~/.ssh/authorized_keys"
+echo -e "##############################################################${reset}"
+echo -e
+echo -e
+read -p "Press [Enter] key to continue..."
 
