@@ -21,13 +21,11 @@ sudo su -c "rm /etc/ssh/ssh_host_*"
 sudo su -c ' ssh-keygen -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key -N "" '
 sudo su -c ' ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N "" '
 
-read -p "Press [Enter] key to continue..."
-
 #Remove small Diffie-Hellman moduli
-#sudo su -c ' awk '$5 >= 3071' /etc/ssh/moduli > /etc/ssh/moduli.safe '
+sudo su -c ' awk '$5 >= 3071' /etc/ssh/moduli > /etc/ssh/moduli.safe '
 #sudo su -c " mv /etc/ssh/moduli.safe /etc/ssh/moduli "
 
-#read -p "Press [Enter] key to continue..."
+read -p "Press [Enter] key to continue..."
 
 #download sshd_config templates
 sudo su -c ' wget https://raw.githubusercontent.com/urbanswelt/bitnami/main/sshd_config.template '
