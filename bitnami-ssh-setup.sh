@@ -39,6 +39,10 @@ sudo rm -f /etc/ssh/sshd_not_to_be_run
 sudo systemctl enable ssh
 sudo systemctl start ssh
 
+#create user folder and file
+mkdir ${HOME}/.ssh &>/dev/null
+touch ${HOME}/.ssh/authorized_keys
+
 echo -e
 echo -e
 echo -e "${red}##############################################################"
@@ -49,6 +53,7 @@ echo -e
 echo -e
 read -p "Press [Enter] key to continue..."
 
+#move sshd_config template file
 sudo su -c " mv ${HOME}/sshd_config.template /etc/ssh/sshd_config "
 sudo systemctl restart ssh
 
