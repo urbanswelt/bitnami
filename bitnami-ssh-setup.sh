@@ -31,13 +31,9 @@ read -p "Press [Enter] key to continue..."
 sudo su -c ' wget https://raw.githubusercontent.com/urbanswelt/bitnami/main/sshd_config.template '
 sudo su -c ' wget https://raw.githubusercontent.com/urbanswelt/bitnami/main/sshd_config_w_pw_enabled '
 
-read -p "Press [Enter] key to continue..."
-
 #backup original sshd_config
 sudo su -c " mv /etc/ssh/sshd_config /etc/ssh/sshd_config.original "
 sudo su -c " mv sshd_config_w_pw_enabled /etc/ssh/sshd_config "
-
-read -p "Press [Enter] key to continue..."
 
 #enable ssh
 sudo rm -f /etc/ssh/sshd_not_to_be_run
