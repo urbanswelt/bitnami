@@ -19,6 +19,18 @@ sudo apt install avahi-daemon libnss-mdns avahi-utils --yes
 
 #dbus is missing for hostnamectl
 sudo apt install dbus --yes
+echo -e
+echo -e
+echo -e "${red}##############################################################"
+echo "  The machine will be restarted ,"
+echo "  after the new hostname is assigned"
+echo -e "##############################################################${reset}"
+echo -e
 read -p "Please choose your new Hostname: "  newhostname
+echo -e
+read -p "Press [Enter] key to continue..."
 sudo hostnamectl set-hostname $newhostname
 sudo shutdown -r now
+
+
+The machine will be restarted after the new hostname is assigned
