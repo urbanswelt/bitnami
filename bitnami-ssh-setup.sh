@@ -42,8 +42,9 @@ sudo su -c " mv sshd_config_w_pw_enabled /etc/ssh/sshd_config "
 read -p "Press [Enter] key to continue..."
 
 #enable ssh
-sudo systemctl enable ssh
-sudo systemctl start ssh
+sudo rm -f /etc/ssh/sshd_not_to_be_run
+#sudo systemctl enable ssh
+#sudo systemctl start ssh
 
 echo -e
 echo -e
