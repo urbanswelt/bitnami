@@ -32,7 +32,7 @@ sudo su -c ' wget https://raw.githubusercontent.com/urbanswelt/bitnami/main/sshd
 
 #backup original sshd_config
 sudo su -c " mv /etc/ssh/sshd_config /etc/ssh/sshd_config.original "
-sudo su -c " mv mv ${HOME}/sshd_config_w_pw_enabled /etc/ssh/sshd_config "
+sudo su -c " mv ${HOME}/sshd_config.PasswordAuthentication /etc/ssh/sshd_config "
 
 #enable ssh
 sudo rm -f /etc/ssh/sshd_not_to_be_run
@@ -50,6 +50,7 @@ echo -e
 read -p "Press [Enter] key to continue..."
 
 sudo su -c " mv ${HOME}/sshd_config.template /etc/ssh/sshd_config "
+sudo systemctl restart ssh
 
 #show status of ssh-audit
 sudo apt install ssh-audit
