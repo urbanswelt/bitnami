@@ -31,6 +31,3 @@ echo -e
 read -p "Press [Enter] key to continue..."
 sudo hostnamectl set-hostname $newhostname
 sudo shutdown -r now
-
-
-The machine will be restarted after the new hostname is assigned
