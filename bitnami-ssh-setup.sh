@@ -22,8 +22,9 @@ sudo su -c ' ssh-keygen -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key -N "" '
 sudo su -c ' ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N "" '
 
 #Remove small Diffie-Hellman moduli
-#sudo su -c ' awk '$5 >= 3071' /etc/ssh/moduli > /etc/ssh/moduli.safe '
-#sudo su -c " mv /etc/ssh/moduli.safe /etc/ssh/moduli "
+awk '$5 >= 3071' /etc/ssh/moduli > "${HOME}/moduli.safe"
+sudo su -c " chown root:root "${HOME}/moduli.safe" "
+sudo su -c " mv ${HOME}/moduli.safe /etc/ssh/moduli "
 
 #download sshd_config templates
 sudo su -c ' wget https://raw.githubusercontent.com/urbanswelt/bitnami/main/sshd_config.template '
@@ -31,7 +32,7 @@ sudo su -c ' wget https://raw.githubusercontent.com/urbanswelt/bitnami/main/sshd
 
 #backup original sshd_config
 sudo su -c " mv /etc/ssh/sshd_config /etc/ssh/sshd_config.original "
-sudo su -c " mv sshd_config_w_pw_enabled /etc/ssh/sshd_config "
+sudo su -c " mv mv ${HOME}/sshd_config_w_pw_enabled /etc/ssh/sshd_config "
 
 #enable ssh
 sudo rm -f /etc/ssh/sshd_not_to_be_run
@@ -47,4 +48,11 @@ echo -e "##############################################################${reset}"
 echo -e
 echo -e
 read -p "Press [Enter] key to continue..."
+
+sudo su -c " mv ${HOME}/sshd_config.template /etc/ssh/sshd_config "
+
+#show status of ssh-audit
+sudo apt install ssh-audit
+clear
+ssh-audit localhost
 
