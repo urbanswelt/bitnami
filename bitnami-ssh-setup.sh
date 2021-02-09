@@ -16,27 +16,26 @@ reset="\e[0m"
 #https://techstop.github.io/bash-script-colors/#:~:text=Colors%20in%20bash%20scripts%20can%20be%20used%20to,Background%20colors%20can%20be%20used%20for%20section%20separation.
 #https://www.ssh-audit.com/hardening_guides.html
 
-sudo su
 #Re-generate the RSA and ED25519 keys
-rm /etc/ssh/ssh_host_*
-ssh-keygen -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key -N ""
-ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N ""
+sudo su -c "rm /etc/ssh/ssh_host_*" 
+sudo su -c ' ssh-keygen -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key -N "" '
+sudo su -c ' ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N "" '
 
 #Remove small Diffie-Hellman moduli
-awk '$5 >= 3071' /etc/ssh/moduli > /etc/ssh/moduli.safe
-mv /etc/ssh/moduli.safe /etc/ssh/moduli
+sudo su -c ' awk '$5 >= 3071' /etc/ssh/moduli > /etc/ssh/moduli.safe '
+sudo su -c " mv /etc/ssh/moduli.safe /etc/ssh/moduli "
 
 #download sshd_config templates
 wget https://raw.githubusercontent.com/urbanswelt/bitnami/main/sshd_config.template
 wget https://raw.githubusercontent.com/urbanswelt/bitnami/main/sshd_config_w_pw_enabled
 
 #backup original sshd_config
-mv /etc/ssh/sshd_config /etc/ssh/sshd_config.original
-mv sshd_config_w_pw_enabled /etc/ssh/sshd_config
+sudo su -c " mv /etc/ssh/sshd_config /etc/ssh/sshd_config.original "
+sudo su -c " mv sshd_config_w_pw_enabled /etc/ssh/sshd_config "
 
 #enable ssh
-systemctl enable ssh
-systemctl start ssh
+sudo systemctl enable ssh
+sudo systemctl start ssh
 
 echo -e
 echo -e
