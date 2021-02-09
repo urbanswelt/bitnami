@@ -26,8 +26,8 @@ sudo su -c ' awk '$5 >= 3071' /etc/ssh/moduli > /etc/ssh/moduli.safe '
 sudo su -c " mv /etc/ssh/moduli.safe /etc/ssh/moduli "
 
 #download sshd_config templates
-wget https://raw.githubusercontent.com/urbanswelt/bitnami/main/sshd_config.template
-wget https://raw.githubusercontent.com/urbanswelt/bitnami/main/sshd_config_w_pw_enabled
+sudo su -c ' wget https://raw.githubusercontent.com/urbanswelt/bitnami/main/sshd_config.template '
+sudo su -c ' wget https://raw.githubusercontent.com/urbanswelt/bitnami/main/sshd_config_w_pw_enabled '
 
 #backup original sshd_config
 sudo su -c " mv /etc/ssh/sshd_config /etc/ssh/sshd_config.original "
