@@ -20,13 +20,12 @@ fi
 
 apt -qq update
 apt -qq install -y dialog
-# apt -qq update && sudo apt upgrade --yes
 
 main_hostname_setup ()
 {
 #dbus is missing for hostnamectl
 apt -qq install dbus --yes
-clear
+
 echo -e
 echo -e
 echo -e "${red}##############################################################"
@@ -40,17 +39,19 @@ while [ -z ${newhostname} ]; do
 done
 echo -e
 hostnamectl set-hostname $newhostname
+state1=!!!RESTART!!!
 }
 
 main_dns_setup ()
 {
 #local DNS resolver
 apt -qq install avahi-daemon libnss-mdns avahi-utils --yes
+state2=!!!DONE!!!
 }
 
 main_ssh_setup ()
 {
-clear
+
 #Re-generate the RSA and ED25519 keys
 su -c "rm /etc/ssh/ssh_host_*" 
 su -c ' ssh-keygen -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key -N "" '
@@ -94,15 +95,17 @@ systemctl restart ssh
 
 #show status of ssh-audit
 apt -qq install ssh-audit
-clear
+
 ssh-audit localhost
+read -p "Press [Enter] key to continue..."
+state3=!!!DONE!!!
 }
 
 main_pgadmin4_setup ()
 {
 #install pgadmin4
 read -p "Please choose your PGAdmin email adress: "  pg_admin_email
-read -p "Please choose your PGAdmin password: "  pg_admin_pwd
+read -s -p "Please choose your PGAdmin password: "  pg_admin_pwd
 
 if [[ ! -d "$PGADMIN_SETUP_EMAIL" ]]; then 
     export PGADMIN_SETUP_EMAIL="${pg_admin_email}"
@@ -120,18 +123,29 @@ vim /usr/pgadmin4/bin/setup-web.sh &&
 /usr/pgadmin4/bin/setup-web.sh --yes
 ufw allow http
 ufw allow https
+state4=!!!DONE!!!
+}
+
+main_5 ()
+{
+state5=!!!FULL!!!
+}
+
+main_6 ()
+{
+state6=!!!FULL!!!
 }
 
 while true; do
-    cmd=(dialog --backtitle "urbanswelt.de - DelugePi Setup." --menu "Choose task." 22 76 16)
-    options=(1 "Set new hostname"
-             2 "mDNS Setup, Bonjour protocol"
-             3 "SSH Setup"
-             4 "Pgadmin4 Setup"
-             5 ""
-             6 ""
-             7 ""
-             8 "restart now")
+    cmd=(dialog --backtitle "urbanswelt.de - Debian System Setup." --menu "Choose task." 22 76 16)
+    options=(1 "Set New hostname	$state1"
+             2 "mDNS Setup, Bonjour protocol	$state2"
+             3 "SSH System Setup	$state3"
+             4 "Pgadmin4 Setup	$state4"
+             5 "empty	$state5"
+             6 "empty	$state6"
+             7 "Update and Upgrade the System	$state7"
+             8 "Restart System now	$state8")
     choice=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)    
     if [ "$choice" != "" ]; then
         case $choice in
@@ -141,11 +155,10 @@ while true; do
             4) main_pgadmin4_setup ;;
             5) main_5 ;;
             6) main_6 ;;
-            7) main_7 ;;
-            8) shutdown -r now ;;
+            7) apt -qq update && sudo apt upgrade --yes && read -p "Press [Enter] key to continue..." && state7=!!!DONE!!! ;;
+            8) shutdown -r now;;
         esac
     else
         break
     fi
 done
-clear
