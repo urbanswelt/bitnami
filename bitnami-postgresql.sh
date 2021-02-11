@@ -53,22 +53,29 @@ main_ssh_setup ()
 {
 
 #Re-generate the RSA and ED25519 keys
-su -c "rm /etc/ssh/ssh_host_*" 
-su -c ' ssh-keygen -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key -N "" '
-su -c ' ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N "" '
+#su -c "rm /etc/ssh/ssh_host_*" 
+#su -c ' ssh-keygen -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key -N "" '
+#su -c ' ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N "" '
+rm /etc/ssh/ssh_host_* 
+ssh-keygen -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key -N ""
+ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N ""
 
 #Remove small Diffie-Hellman moduli
 awk '$5 >= 3071' /etc/ssh/moduli > "${HOME}/moduli.safe"
-su -c " chown root:root "${HOME}/moduli.safe" "
-su -c " mv ${HOME}/moduli.safe /etc/ssh/moduli "
+#su -c " chown root:root "${HOME}/moduli.safe" "
+#su -c " mv ${HOME}/moduli.safe /etc/ssh/moduli "
+chown root:root "${HOME}/moduli.safe"
+mv ${HOME}/moduli.safe /etc/ssh/moduli
 
 #download sshd_config templates
 su -c ' wget https://raw.githubusercontent.com/urbanswelt/bitnami/main/sshd_config.template '
 su -c ' wget https://raw.githubusercontent.com/urbanswelt/bitnami/main/sshd_config.PasswordAuthentication '
 
 #backup original sshd_config
-su -c " mv /etc/ssh/sshd_config /etc/ssh/sshd_config.original "
-su -c " mv ${HOME}/sshd_config.PasswordAuthentication /etc/ssh/sshd_config "
+#su -c " mv /etc/ssh/sshd_config /etc/ssh/sshd_config.original "
+#su -c " mv ${HOME}/sshd_config.PasswordAuthentication /etc/ssh/sshd_config "
+mv /etc/ssh/sshd_config /etc/ssh/sshd_config.original
+mv ${HOME}/sshd_config.PasswordAuthentication /etc/ssh/sshd_config
 
 #enable ssh
 rm -f /etc/ssh/sshd_not_to_be_run
@@ -90,7 +97,8 @@ echo -e
 read -p "Press [Enter] key to continue..."
 
 #move sshd_config template file
-su -c " mv ${HOME}/sshd_config.template /etc/ssh/sshd_config "
+#su -c " mv ${HOME}/sshd_config.template /etc/ssh/sshd_config "
+mv ${HOME}/sshd_config.template /etc/ssh/sshd_config
 systemctl restart ssh
 
 #show status of ssh-audit
