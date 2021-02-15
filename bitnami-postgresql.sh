@@ -1,8 +1,9 @@
 #!/bin/bash
 
 #DEBUG
-
-if [ $1 = DEBUG ]; then
+dbgSTR=DEBUG
+if [ $1 = $dbgSTR ] 
+then
 echo "Press CTRL+C to proceed."
 trap "pkill -f 'sleep 1h'" INT
 trap "set +x ; sleep 1h ; set -x" DEBUG
