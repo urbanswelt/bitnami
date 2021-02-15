@@ -61,6 +61,13 @@ state2=!!!DONE!!!
 
 main_ssh_setup ()
 {
+dbgSTR=DEBUG
+if [ $1 = $dbgSTR ] 
+then
+echo "Press CTRL+C to proceed."
+trap "pkill -f 'sleep 1h'" INT
+trap "set +x ; sleep 1h ; set -x" DEBUG
+fi
 
 #Re-generate the RSA and ED25519 keys
 su -c "rm /etc/ssh/ssh_host_*" 
