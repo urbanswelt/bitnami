@@ -2,13 +2,20 @@
 
 #debugging
 #start script with arg e.g. --> sudo bash 2Oo6rzSetup DEBUG
-dbgSTR=DEBUG
-if [ $1 = $dbgSTR ] 
+if [ -z "$var" ]
 then
-echo "Press CTRL+C to proceed."
-trap "pkill -f 'sleep 1h'" INT
-trap "set +x ; sleep 1h ; set -x" DEBUG
+     #nothing
+else
+      if [ $1 = $dbgSTR ] 
+        then
+          dbgSTR=DEBUG
+          echo "Press CTRL+C to proceed."
+          trap "pkill -f 'sleep 1h'" INT
+          trap "set +x ; sleep 1h ; set -x" DEBUG
+      fi
 fi
+
+
 
 # Ansi color code variables
 red="\e[0;91m"
