@@ -2,17 +2,15 @@
 
 #debugging
 #start script with arg e.g. --> sudo bash 2Oo6rzSetup DEBUG
-if [ -z "$var" ]
+dbgSTR=DEBUG
+isActive=$1
+
+if [ $isActive = $dbgSTR ] 
 then
-     #nothing
-else
-      if [ $1 = $dbgSTR ] 
-        then
-          dbgSTR=DEBUG
-          echo "Press CTRL+C to proceed."
-          trap "pkill -f 'sleep 1h'" INT
-          trap "set +x ; sleep 1h ; set -x" DEBUG
-      fi
+
+echo "Press CTRL+C to proceed."
+trap "pkill -f 'sleep 1h'" INT
+trap "set +x ; sleep 1h ; set -x" DEBUG
 fi
 
 
