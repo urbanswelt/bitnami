@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#DEBUG
+echo "Press CTRL+C to proceed."
+trap "pkill -f 'sleep 1h'" INT
+trap "set +x ; sleep 1h ; set -x" DEBUG
+
 # Ansi color code variables
 red="\e[0;91m"
 blue="\e[0;94m"
