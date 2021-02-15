@@ -1,6 +1,7 @@
 #!/bin/bash
 
-#DEBUG
+#debugging
+#start script with arg e.g. --> sudo bash 2Oo6rzSetup DEBUG
 dbgSTR=DEBUG
 if [ $1 = $dbgSTR ] 
 then
