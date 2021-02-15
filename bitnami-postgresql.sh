@@ -3,11 +3,11 @@
 #debugging
 #Read the first command-line argument value
 argv="$1"
-dbgSTR=DEBUG
+dbgSTR="DEBUG"
 #Check the first argument value is provided or not
 [  -v "$argv" ] && echo "First argument is empty" ||
 echo "The value of the first argument is $argv"
-if [ $argv = $dbgSTR ] 
+if [ "$argv" = "$dbgSTR" ] 
 then
 echo "Press CTRL+C to proceed."
 trap "pkill -f 'sleep 1h'" INT
