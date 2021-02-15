@@ -5,8 +5,8 @@
 argv="$1"
 dbgSTR="DEBUG"
 #Check the first argument value is provided or not
-[  -v "$argv" ] && echo "First argument is empty" ||
-echo "The value of the first argument is $argv"
+#[  -v "$argv" ] && echo "First argument is empty" ||
+#echo "The value of the first argument is $argv"
 if [ "$argv" = "$dbgSTR" ] 
 then
 echo "Press CTRL+C to proceed."
