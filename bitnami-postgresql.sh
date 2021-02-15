@@ -1,9 +1,12 @@
 #!/bin/bash
 
 #DEBUG
+
+if [ $1 -e DEBUG ]; then
 echo "Press CTRL+C to proceed."
 trap "pkill -f 'sleep 1h'" INT
 trap "set +x ; sleep 1h ; set -x" DEBUG
+fi
 
 # Ansi color code variables
 red="\e[0;91m"
