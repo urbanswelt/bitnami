@@ -142,6 +142,9 @@ main_pgadmin4_setup() {
 }
 
 main_5() {
+#detail list of mDNS
+avahi-browse -art
+read -p "Press [Enter] key to continue..."
     state5=!!!FULL!!!
 }
 
@@ -155,7 +158,7 @@ while true; do
         2 "mDNS Setup, Bonjour protocol	$state2"
         3 "SSH System Setup	$state3"
         4 "Pgadmin4 Setup	$state4"
-        5 "empty	$state5"
+        5 "mDNS status	$state5"
         6 "empty	$state6"
         7 "Update and Upgrade the System	$state7"
         8 "Restart System now	$state8")
