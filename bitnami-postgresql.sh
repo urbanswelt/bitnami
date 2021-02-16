@@ -31,6 +31,7 @@ fi
 
 apt -qq update
 apt -qq install -y dialog
+apt -qq install -y apt-utils #TODO
 
 main_hostname_setup() {
     #dbus is missing for hostnamectl
