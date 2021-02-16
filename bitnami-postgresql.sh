@@ -91,7 +91,7 @@ main_ssh_setup() {
 
     #get ip's
     ips=$(ip -o addr show up primary scope global |
-              while read -r num dev fam addr rest; do echo ${addr%/*}; done)
+              while read -r num dev fam addr rest; do echo - ${addr%/*}; done)
     
     echo -e
     echo -e
