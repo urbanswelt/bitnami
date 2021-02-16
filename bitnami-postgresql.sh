@@ -89,11 +89,17 @@ main_ssh_setup() {
     touch /home/${SUDO_USER:-${USER}}/.ssh/authorized_keys
     chown -R ${SUDO_USER:-${USER}}:${SUDO_USER:-${USER}} /home/${SUDO_USER:-${USER}}/.ssh
 
+    #get ip's
+    ips=$(ip -o addr show up primary scope global |
+              while read -r num dev fam addr rest; do echo ${addr%/*}; done)
+    
     echo -e
     echo -e
     echo -e "${red}##############################################################"
     echo "  temporarily ssh with password login is allowed,"
     echo "  please add your key to ~/.ssh/authorized_keys"
+    echo "  Your IP is: "
+    echo "  $ips"
     echo -e "##############################################################${reset}"
     echo -e
     echo -e
