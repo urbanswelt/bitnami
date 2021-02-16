@@ -50,6 +50,8 @@ main_hostname_setup() {
     done
     echo -e
     hostnamectl set-hostname $newhostname
+    hostnamectl status
+    read -p "Press [Enter] key to continue..."
     state1=!!!RESTART!!!
 }
 
