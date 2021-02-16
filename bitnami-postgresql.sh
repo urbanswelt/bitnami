@@ -100,7 +100,7 @@ main_ssh_setup() {
     echo "  temporarily ssh with password login is allowed,"
     echo "  please add your key to ~/.ssh/authorized_keys"
     echo "  Your IP is: "
-    echo "  $ips"
+    echo "$ips"
     echo -e "##############################################################${reset}"
     echo -e
     echo -e
