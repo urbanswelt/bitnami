@@ -58,7 +58,8 @@ sudo su -c " mv ${HOME}/sshd_config.template /etc/ssh/sshd_config "
 sudo systemctl restart ssh
 
 #show status of ssh-audit
-sudo apt install ssh-audit
+#sudo apt install ssh-audit <-- ubuntu has old packages
+sudo snap install ssh-audit
 clear
 ssh-audit localhost
 
